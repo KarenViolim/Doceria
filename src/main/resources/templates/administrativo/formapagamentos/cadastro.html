@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{administrativo/fragments/layout}">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Karen Candy's |</title>
+</head>
+
+<body>
+	<!-- page content -->
+	<div class="right_col" role="main" layout:fragment="corpo">
+		<div class="">
+			<div class="page-title">
+				<div class="title_left">
+					<h3>Cadastros</h3>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>Cadastro de Formas de Pagamento</h2>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<form class="form-horizontal form-label-left"
+								action="/administrativo/formapagamentos/salvarFormaPagamento"
+								method="Post" th:object="${formadepagamento}" novalidate>
+
+								<div class="item form-group">
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input th:field="*{id}" readOnly="readonly"
+											class="form-control col-md-7 col-xs-12" type="hidden">
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="sigla">Forma de Pagamento: <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input th:field="*{formaPagamento}" type="text"
+											id="formaPagamento" required="required"
+											class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+								<div class="item form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="parcela">Parcela: <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input th:field="*{parcela}" type="number" id="parcela"
+											required="required" class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+								<div class="ln_solid"></div>
+								<div class="form-group">
+									<div class="col-md-6 col-md-offset-3">
+										<button id="send" type="submit" class="btn btn-success">Salvar</button>
+										<button type="submit" class="btn btn-primary">Cancelar</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

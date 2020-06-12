@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:UseCaseDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="DoceriaUseCaseDiagram" id="{UMLID=_iTd08KgEEeq3aorNycON5w,JavaID=}" metadata="uml2-1.0" tag="10" key="323030373036323920446F6365726961">
+  <diagramOptions xsi:type="options:UseCaseDiagramOptions" level="0" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="14,14" gridOrigin="0,0" rulerUnit="cm" gridShow="true">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+</editmodel:UseCaseDiagramEditModel>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{administrativo/fragments/layout}">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Página de Cadastros</title>
+</head>
+
+<body>
+	<!-- page content -->
+	<div class="right_col" role="main" layout:fragment="corpo">
+		<div class="">
+			<div class="page-title">
+				<div class="title_left">
+					<h3>Cadastros</h3>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>Cadastro de Estados</h2>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+							<div id="mensagem"></div>
+
+							<form class="form-horizontal form-label-left" id="estadoJS"
+								th:object="${estado}">
+								<div class="alert alert-danger"
+									th:if="${#fields.hasAnyErrors()}">
+									<div th:each="detailedError : ${#fields.detailedErrors()}">
+										<span th:text="${detailedError.message}"></span>
+									</div>
+								</div>
+								<input th:field="*{id}" readOnly="readonly"
+									class="form-control col-md-7 col-xs-12" type="hidden">
+
+								<div class="item form-group"
+									th:classappend="${#fields.hasErrors('nome')}? 'has-error'">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="name">Nome: <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input th:field="*{nome}" id="nomeEstado"
+											class="form-control col-md-7 col-xs-12" name="nomeEstado"
+											required="required" type="text">
+									</div>
+								</div>
+								<div class="item form-group"
+									th:classappend="${#fields.hasErrors('sigla')}? 'has-error'">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12"
+										for="sigla">Sigla: <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<input th:field="*{sigla}" type="text" id="siglaEstado"
+											name="siglaEstado" required="required"
+											class="form-control col-md-7 col-xs-12">
+									</div>
+								</div>
+								<div class="ln_solid"></div>
+								<button class="btn btn-success">Salvar</button>
+								<button type="submit" class="btn btn-primary">Cancelar</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

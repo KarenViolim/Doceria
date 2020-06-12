@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{administrativo/fragments/layout}">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Página de Cadastros</title>
+</head>
+
+<body>
+	<!-- page content -->
+	<div class="right_col" role="main" layout:fragment="corpo">
+		<div class="">
+			<div class="page-title">
+				<div class="title_left">
+					<h3>Listas</h3>
+				</div>
+			</div>
+
+			<div class="clearfix"></div>
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<h2>Exibir Produtos</h2>
+
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+
+						<table id="datatable-buttons" class="table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Nome do Produto</th>
+									<th>Valor do Produto</th>
+									<th>Marca</th>
+									<th>Categoria</th>
+									<th>Quantidade em Estoque</th>
+									<th>Imagem</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="prod : ${produto}">
+									<td th:text="${prod.id}"></td>
+									<td th:text="${prod.nomeProduto}"></td>
+									<td th:text="${prod.valor}"></td>
+									<td th:text="${prod.marca}"></td>
+									<td th:text="${prod.categoria}"></td>
+									<td th:text="${prod.quantidadeEstoque}"></td>
+									<td><img th:src="@{/administrativo/produtos/mostrarImagem/{imagem}(imagem=${prod.imagem})}" width="100"/></td>
+									<td><a class="btn btn-warning btn-xs"
+										th:href="@{/administrativo/produtos/editarProduto/{id}(id=${prod.id})}">Editar</a>
+										<a class="btn btn-danger btn-xs"
+										th:href="@{/administrativo/produtos/removerProduto/{id}(id=${prod.id})}">Remover</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="form-group">
+							<div class="col-md-2">
+								<a class="form-control input-md btn btn-primary"
+									href="/administrativo/produtos/cadastrar">Adicionar</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

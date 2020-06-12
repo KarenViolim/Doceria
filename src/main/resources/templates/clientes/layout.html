@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Karen Candy's</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Place favicon.ico in the root directory -->
+<link rel="shortcut icon" type="image/x-icon"
+	href="/cliente/images/favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+
+<!-- All css files are included here. -->
+<!-- Bootstrap fremwork main css -->
+<link rel="stylesheet" href="/cliente/css/bootstrap.min.css">
+<!-- Owl Carousel min css -->
+<link rel="stylesheet" href="/cliente/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/cliente/css/owl.theme.default.min.css">
+<!-- This core.css file contents all plugings css file. -->
+<link rel="stylesheet" href="/cliente/css/core.css">
+<!-- Theme shortcodes/elements style -->
+<link rel="stylesheet" href="/cliente/css/shortcode/shortcodes.css">
+<!-- Theme main style -->
+<link rel="stylesheet" href="/cliente/css/style.css">
+<!-- Responsive css -->
+<link rel="stylesheet" href="/cliente/css/responsive.css">
+<!-- User style -->
+<link rel="stylesheet" href="/cliente/css/custom.css">
+
+<!-- Modernizr JS -->
+<script src="/cliente/js/vendor/modernizr-3.5.0.min.js"></script>
+</head>
+
+<body>
+	<!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+	<!-- Body main wrapper start -->
+	<div class="wrapper">
+		<!-- Start Header Style -->
+		<header id="htc__header" class="htc__header__area header--one">
+			<!-- Start Mainmenu Area -->
+			<div id="sticky-header-with-topbar"
+				class="mainmenu__wrap sticky__header">
+				<div class="container">
+					<div class="row">
+						<div class="menumenu__container clearfix">
+							<div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
+								<div class="logo">
+									<a href="/"><img src="/cliente/images/logo.png"
+										alt="logo images"></a>
+								</div>
+							</div>
+							<div class="col-md-7 col-lg-8 col-sm-5 col-xs-3">
+								<nav class="main__menu__nav hidden-xs hidden-sm">
+									<ul class="main__menu">
+										<li class="drop"><a th:href="@{/}">Página Inicial</a></li>
+										<li class="drop"><a th:href="@{/blog}">Blog</a></li>
+										<li class="drop"><a th:href="@{/contato}">Contato</a></li>
+										<li class="drop"><a th:href="@{/clientes/cadastrar}">Cadastrar</a></li>
+										<li class="drop"><a th:href="@{/clientes/cadastrar}">Login</a></li>
+
+									</ul>
+								</nav>
+
+								<div class="mobile-menu clearfix visible-xs visible-sm">
+									<nav id="mobile_dropdown">
+										<ul>
+											<li><a th:href="@{/}">Home</a></li>
+											<li><a th:href="@{/blog}">Blog</a></li>
+											<li><a th:href="@{/contato}">Contato</a></li>
+											<li><a th:href="@{/clientes/cadastrar}">Cadastrar</a></li>
+											<li><a th:href="@{/clientes/login}">Login</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+							<div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
+								<div class="header__right">
+									<div class="header__search search search__open">
+										<a href="@{/}"><i class="icon-magnifier icons"></i></a>
+									</div>
+									<div class="header__account">
+										<a th:href="@{/}"><i class="icon-user icons"></i></a>
+									</div>
+									<div class="htc__shopping__cart">
+										<a class="cart__menu" th:href="@{/cart}"><i
+											class="icon-handbag icons"></i></a> <a th:href="@{/cart}"><span
+											class="htc__qua"></span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mobile-menu-area"></div>
+				</div>
+			</div>
+			<!-- End Mainmenu Area -->
+		</header>
+		<!-- End Header Area -->
+
+		<div class="body__overlay"></div>
+		<!-- Start Offset Wrapper -->
+		<div class="offset__wrapper">
+			<!-- Start Search Popap -->
+			<div class="search__area">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="search__inner">
+								<form action="#" method="get">
+									<input placeholder="Search here... " type="text">
+									<button type="submit"></button>
+								</form>
+								<div class="search__close__btn">
+									<span class="search__close__btn_icon"><i
+										class="zmdi zmdi-close"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Search Popap -->
+			<!-- Start Cart Panel -->
+			<div class="shopping__cart">
+				<div class="shopping__cart__inner">
+					<div class="offsetmenu__close__btn">
+						<a><i class="zmdi zmdi-close"></i></a>
+					</div>
+					<div class="shp__cart__wrap">
+						<div class="shp__single__product" th:each="item : ${listaItens}">
+							<div class="shp__pro__thumb">
+								<a> <img
+									th:src="@{/mostrarImagem/{imagem}(imagem=${item.produto.imagem})}"
+									alt="product img" />
+								</a>
+							</div>
+							<div class="shp__pro__details">
+								<h2>
+									<a th:text="${item.produto.nomeProduto}"></a>
+								</h2>
+								<p>Quantidade: <span class="quantity" th:text="${item.quantidade}"></span> </p>
+								<p>Valor Total <span class="shp__price" th:text="${item.valorTotal}"></span></p>
+							</div>
+							<div class="remove__btn">
+								<a th:href="@{/removerProduto/{id}(id=${item.produto.id})}" title="Remover item"><i
+									class="zmdi zmdi-close"></i></a>
+							</div>
+						</div>
+					</div>
+					<ul class="shoping__total" th:each="compra : ${compras}">
+						<li class="subtotal">Subtotal:</li>
+						<li class="total__price" th:text="${compra.valorTotal}"></li>
+					</ul>
+					<ul class="shopping__btn">
+						<li><a href="/cart">VER CARRINHO</a></li>
+						<li class="shp__checkout"><a href="/finalizar">FINALIZAR COMPRA</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- End Cart Panel -->
+		</div>
+		<!-- End Offset Wrapper -->
+		<!-- Start Slider Area -->
+		<section layout:fragment="corpo"></section>
+		<!-- Start Footer Area -->
+		<footer id="htc__footer">
+			<!-- Start Copyright Area -->
+			<div class="htc__copyright bg__cat--5">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="copyright__inner">
+								<p>
+									Copyright©
+									<script>
+										document
+												.write(new Date().getFullYear())
+									</script>
+									, Desenvolvido por: Karen Cristina Violim.
+								</p>
+								<a href="#"><img
+									src="/cliente/images/others/shape/paypol.png"
+									alt="payment images"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Copyright Area -->
+		</footer>
+		<!-- End Footer Style -->
+	</div>
+	<!-- Body main wrapper end -->
+
+	<!-- Placed js at the end of the document so the pages load faster -->
+
+	<!-- jquery latest version -->
+	<script src="/cliente/js/vendor/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap framework js -->
+	<script src="/cliente/js/bootstrap.min.js"></script>
+	<!-- All js plugins included in this file. -->
+	<script src="/cliente/js/plugins.js"></script>
+	<script src="/cliente/js/slick.min.js"></script>
+	<script src="/cliente/js/owl.carousel.min.js"></script>
+	<!-- Waypoints.min.js. -->
+	<script src="/cliente/js/waypoints.min.js"></script>
+	<!-- Main js file that contents all jQuery plugins activation. -->
+	<script src="/cliente/js/main.js"></script>
+</body>
+
+</html>

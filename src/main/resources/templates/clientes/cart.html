@@ -1,0 +1,161 @@
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{clientes/layout}">
+<head>
+<meta charset="utf-8">
+<title>Karen Candy's</title>
+</head>
+<script type="text/javascript">
+	function openAlert()
+{
+		alert("Estoque Insuficiente!");
+	}
+</script>
+<body>
+	<!-- Start Slider Area -->
+	<section layout:fragment="corpo">
+        <!-- End Offset Wrapper -->
+        <!-- Start Bradcaump area -->
+        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/4.jpg) no-repeat scroll center center / cover ;">
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="bradcaump__inner">
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="index.html">Home</a>
+                                  <span class="brd-separetor"><i class="zmdi zmdi-chevron-right"></i></span>
+                                  <span class="breadcrumb-item active">shopping cart</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        <!-- cart-main-area start -->
+        <div class="cart-main-area ptb--100 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <form action="#">               
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-thumbnail">Produtos</th>
+                                            <th class="product-name">Nome</th>
+                                            <th class="product-price">Valor Unitário</th>
+                                            <th class="product-quantity">Quantidade</th>
+                                            <th class="product-subtotal">Total</th>
+                                            <th class="product-remove">Remover</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item : ${listaItens}">
+                                            <td class="product-thumbnail"><a href="#"><img th:src="@{/mostrarImagem/{imagem}(imagem=${item.produto.imagem})}" alt="product img" /></a></td>
+                                            <td class="product-name"><a><span th:text="${item.produto.nomeProduto}"></span></a></td>
+                                            <td class="product-price"><span th:text="${item.valorUnitario}" class="amount"></span></td>
+                                            <td class="product-quantity">
+                                            
+                                            <a class="btn btn-sm btn-sucess" th:href="@{/alterarQuantidade/{id}/{acao}(id=${item.produto.id},acao=${0})}" role="button">
+											<i class="fa fa-minus"></i></a>
+                                           
+											<input type="text" th:value="${item.quantidade}" onblur="if(this.value == '')"/>
+											
+											<a class="btn btn-sm btn-sucess" th:href="@{/alterarQuantidade/{id}/{acao}(id=${item.produto.id},acao=${1})}" role="button">
+											<i class="fa fa-plus"></i></a>
+                                            </td>
+                                            <td class="product-subtotal"><span th:text="${item.valorTotal}"></span></td>
+                                            <td class="product-remove">
+                                            <a class="btn btn-sm btn-sucess" th:href="@{/removerProduto/{id}(id=${item.produto.id})}" role="button">
+											<i class="icon-trash icons"></i></a>
+											</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="ht__coupon__code">
+                                        <span>enter your discount code</span>
+                                        <div class="coupon__box">
+                                            <input type="text" placeholder="">
+                                            <div class="ht__cp__btn">
+                                                <a href="#">enter</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-12 smt-40 xmt-40">
+                                    <div class="htc__cart__total">
+                                        <h6>cart total</h6>
+                                        <div class="cart__desk__list">
+                                            <ul class="cart__desc">
+                                                <li>Valor</li>
+                                                <li>Frete</li>
+                                            </ul>
+                                            <ul class="cart__price">
+                                                <li><span th:text="${compra.valorTotal}"></span></li>
+                                                <li>$0.00</li>
+                                            </ul>
+                                        </div>
+                                        <div class="cart__total">
+                                            <span>Valor Total</span>
+                                            <span th:text="${compra.valorTotal}"></span>
+                                        </div>
+                                        <ul class="payment__btn">
+                                        	<li><a href="/">CONTINUAR COMPRANDO</a></li>
+                                            <li class="active"><a href="/finalizar">FINALIZAR COMPRA</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart-main-area end -->
+        <!-- Start Brand Area -->
+        <div class="htc__brand__area bg__cat--4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ht__brand__inner">
+                            <ul class="brand__list owl-carousel clearfix">
+                                <li><a href="#"><img src="images/brand/1.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/2.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/3.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/4.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/5.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/5.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/1.png" alt="brand images"></a></li>
+                                <li><a href="#"><img src="images/brand/2.png" alt="brand images"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Brand Area -->
+        <!-- Start Banner Area -->
+        <div class="htc__banner__area">
+            <ul class="banner__list owl-carousel owl-theme clearfix">
+                <li><a href="product-details.html"><img src="images/banner/bn-3/1.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/2.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/3.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/4.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/5.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/6.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/1.jpg" alt="banner images"></a></li>
+                <li><a href="product-details.html"><img src="images/banner/bn-3/2.jpg" alt="banner images"></a></li>
+            </ul>
+        </div>
+        <!-- End Banner Area -->
+        <!-- End Banner Area -->
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{clientes/layout}">
+<head>
+<meta charset="utf-8">
+<title>Karen Candy's</title>
+</head>
+<body>
+	<!-- Start Slider Area -->
+	<section layout:fragment="corpo">
+		<div class="cart-main-area ptb--100 bg__white">
+			<div class="container">
+				<div class="row">
+					<div>
+						<p>
+							Usuário Logado: <span th:text="${cliente.nome}"></span> &nbsp -
+							&nbsp &nbsp E-mail: <span th:text="${cliente.email}"></span>
+						<p>
+							Endereço: <span th:text="${cliente.endereco}"></span>,&nbsp<span
+								th:text="${cliente.numero}"></span> &nbsp - &nbsp<span
+								th:text="${cliente.cidade.nome}"></span>
+						</p>
+					</div>
+					<br>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<form action="/finalizar/confirmar" method="Post"
+							th:object="${compra}">
+							<div class="table-content table-responsive">
+								<table>
+									<thead>
+										<tr>
+											<th class="product-thumbnail">Produtos</th>
+											<th class="product-name">Nome</th>
+											<th class="product-price">Valor Unitário</th>
+											<th class="product-quantity">Quantidade</th>
+											<th class="product-subtotal">Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${listaItens}">
+											<td class="product-thumbnail"><a href="#"><img
+													th:src="@{/mostrarImagem/{imagem}(imagem=${item.produto.imagem})}"
+													alt="product img" /></a></td>
+											<td class="product-name"><a><span
+													th:text="${item.produto.nomeProduto}"></span></a></td>
+											<td class="product-price"><span
+												th:text="${item.valorUnitario}" class="amount"></span></td>
+											<td class="product-quantity"><span
+												th:text="${item.quantidade}" class="amount"></span></td>
+											<td class="product-subtotal"><span
+												th:text="${item.valorTotal}"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="ht__coupon__code">
+								<label class="control-label col-md-4" for="formapg">FORMA
+									DE PAGAMENTO: <span class="required">*</span>
+								</label>
+								<div class="col-6">
+									<select name="idForma" class="form-control">
+										<option th:each="f: ${formapg}" th:value="${f.id}"
+											th:text="${f.formaPagamento}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="htc__cart__total">
+									<h6>Total Carrinho</h6>
+									<div class="cart__desk__list">
+										<ul class="cart__desc">
+											<li>Valor</li>
+											<li>Frete</li>
+										</ul>
+										<ul class="cart__price">
+											<li><span th:text="${compra.valorTotal}"></span></li>
+											<li>0.00</li>
+										</ul>
+									</div>
+									<div class="cart__total">
+										<span>Valor Total</span> <span th:text="${compra.valorTotal}"></span>
+									</div>
+									<button type="submit" class="fv-btn">FINALIZAR</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>
