@@ -58,4 +58,7 @@ public class ItensEntrada implements Serializable{
 	public void setValorVenda(double valorVenda) {
 		this.valorVenda = valorVenda;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

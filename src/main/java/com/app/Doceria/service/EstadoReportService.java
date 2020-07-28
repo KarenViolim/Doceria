@@ -1,12 +1,10 @@
 package com.app.Doceria.service;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.stereotype.Service;
+import com.app.Doceria.Conexao;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -15,35 +13,34 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-@Service
 public class EstadoReportService {
-
+	private Conexao conexao;
 	public String generateReport() {
 		try {
 
-			String reportPath = "C:\\resources\\report";
+			String reportPath = "F:\\Content\\Report";
 
 			// Compile the Jasper report from .jrxml to .japser
-			JasperReport jasperReport = JasperCompileManager.compileReport(reportPath + "\\report\\listagemDocumentos.jrxml");
+			JasperReport jasperReport = JasperCompileManager.compileReport(reportPath + "\\employee-rpt.jrxml");
 
 			// Get your data source
-			DriverManagerDataSource dataSource = new DriverManagerDataSource();
+			JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource((Collection<?>) conexao);
 
 			// Add parameters
 			Map<String, Object> parameters = new HashMap<>();
 
-			parameters.put("Criado por", "Karen Cristina");
+			parameters.put("createdBy", "Websparrow.org");
 
 			// Fill the report
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,
-					dataSource.getConnection());
+					jrBeanCollectionDataSource);
 
 			// Export the report to a PDF file
-			JasperExportManager.exportReportToPdfFile(jasperPrint, reportPath + "\\report\\listagemDocumentos.pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, reportPath + "\\Emp-Rpt.pdf");
 
-			System.out.println("Finalizado");
+			System.out.println("Done");
 
-			return "Report gerado com sucesso @path= " + reportPath;
+			return "Report successfully generated @path= " + reportPath;
 
 		} catch (Exception e) {
 			e.printStackTrace();

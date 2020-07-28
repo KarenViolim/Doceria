@@ -31,7 +31,7 @@ public class Funcionario implements Serializable {
 	@NotEmpty(message="O CPF é obrigatório")
 	private String cpf;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private String dataNascimento;
+	private Date dataNascimento;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dataEntrada;
 	@ManyToOne 
@@ -62,10 +62,10 @@ public class Funcionario implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public Date getDataEntrada() {

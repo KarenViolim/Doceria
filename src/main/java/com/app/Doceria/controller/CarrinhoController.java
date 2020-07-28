@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.metamodel.SetAttribute;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +44,7 @@ public class CarrinhoController {
 	@Autowired
 	private ItensCompraRepository repositoryItens;
 	
-
+	private String mensagemQuantidade = " ";
 	private List<ItensCompra> ItensCompra = new ArrayList<ItensCompra>();
 	private Compra compra = new Compra();
 	private Cliente cliente;
@@ -95,7 +94,7 @@ public class CarrinhoController {
 			return "redirect:/cart";
 			
 		} else {
-			System.out.println("ESTOQUE INSUFICIENTE!");
+			mensagemQuantidade = "ESTOQUE INSUFICIENTE!";
 			return "redirect:/";
 		}
 		
@@ -129,7 +128,7 @@ public class CarrinhoController {
 	}
 	
 	@GetMapping("/alterarQuantidade/{id}/{acao}")
-	public String alterarQuantidade(@PathVariable Long id, @PathVariable Integer acao) {
+	public String alterarQuantidade(@PathVariable Long id, @PathVariable Integer acao, Model model) {
 		
 		for (ItensCompra it : ItensCompra) {
 			if (it.getProduto().getId() == (id)) {
@@ -139,7 +138,11 @@ public class CarrinhoController {
 						it.setValorTotal(0.);
 						it.setValorTotal(it.getValorTotal()+(it.getQuantidade() * it.getValorUnitario()));
 					} else {
-						System.out.println("ESTOQUE INSUFICIENTE!");
+						System.out.println("ESTOQUE INSUFICIENTE");
+						model.addAttribute("msg", "ESTOQUE INSUFICIENTE");
+//						ModelAndView mv = new ModelAndView(mensagemQuantidade);
+//						mv.addObject("mensagem", "ESTOQUE INSUFICIENTE");
+//						RequestContext.getCurrentInstance().execute("openAlert();");
 					}
 				}else if (acao == 0){
 					it.setQuantidade(it.getQuantidade() - 1);
@@ -202,6 +205,13 @@ public class CarrinhoController {
 		mv.addObject("formapg", repositoryFormaPg.findAll());
 		return mv;
 	}
+	
+//	@PostMapping("/alterarQuantidade")
+//	public ModelAndView alterarQuantidade() {
+//		ModelAndView mv = new ModelAndView();
+//		mv.addObject("mensagem", mensagemQuantidade);
+//		return mv;
+//	}
 	
 	@PostMapping("/finalizar/confirmar")
 	public ModelAndView confirmarCompra(Long idForma) {
