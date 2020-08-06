@@ -24,7 +24,7 @@
 					<br>
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<form action="/finalizar/confirmar" method="Post"
-							th:object="${compra}">
+							th:object="${vendas}">
 							<div class="table-content table-responsive">
 								<table>
 									<thead>
@@ -73,12 +73,12 @@
 											<li>Frete</li>
 										</ul>
 										<ul class="cart__price">
-											<li><span th:text="${compra.valorTotal}"></span></li>
+											<li><span th:text="${venda.valorTotal}"></span></li>
 											<li>0.00</li>
 										</ul>
 									</div>
 									<div class="cart__total">
-										<span>Valor Total</span> <span th:text="${compra.valorTotal}"></span>
+										<span>Valor Total</span> <span th:text="${venda.valorTotal}"></span>
 									</div>
 									<button type="submit" class="fv-btn">FINALIZAR</button>
 								</div>

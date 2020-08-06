@@ -1,6 +1,7 @@
 package com.app.Doceria.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="cliente")
@@ -25,7 +28,8 @@ public class Cliente implements Serializable{
 	@Column(nullable=false, length=250)
 	@NotEmpty(message="O CPF é obrigatório")
 	private String cpf;
-	private String dataNascimento;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dataNascimento;
 	private String telefone;
 	private String email;
 	private String senha;
@@ -51,10 +55,10 @@ public class Cliente implements Serializable{
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public String getTelefone() {

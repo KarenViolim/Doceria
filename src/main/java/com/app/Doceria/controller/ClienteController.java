@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.Doceria.model.Cliente;
+import com.app.Doceria.model.Funcionario;
 import com.app.Doceria.repository.CidadeRepository;
 import com.app.Doceria.repository.ClienteRepository;
 

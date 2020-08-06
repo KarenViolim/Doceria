@@ -13,8 +13,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="compra")
-public class Compra implements Serializable {
+@Table(name="venda")
+public class Venda implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Compra implements Serializable {
 	@ManyToOne
 	private Cliente cliente;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataCompra = new Date();
+	private Date dataVenda = new Date();
 	@ManyToOne
 	private FormaDePagamento formaPagamento;
 	private Double valorTotal=0.;
@@ -43,12 +43,12 @@ public class Compra implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Date getDataCompra() {
-		return dataCompra;
+	public Date getDataVenda() {
+		return dataVenda;
 	}
 
 	public void setDataCompra(Date dataCompra) {
-		this.dataCompra = dataCompra;
+		this.dataVenda = dataCompra;
 	}
 
 	public FormaDePagamento getFormaPagamento() {

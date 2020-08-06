@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.Doceria.model.Cliente;
-import com.app.Doceria.model.Compra;
 import com.app.Doceria.model.FormaDePagamento;
-import com.app.Doceria.model.ItensCompra;
+import com.app.Doceria.model.ItensVenda;
 import com.app.Doceria.model.Produto;
+import com.app.Doceria.model.Venda;
 import com.app.Doceria.repository.ClienteRepository;
-import com.app.Doceria.repository.CompraRepository;
 import com.app.Doceria.repository.FormaPagamentoRepository;
-import com.app.Doceria.repository.ItensCompraRepository;
+import com.app.Doceria.repository.ItensVendaRepository;
 import com.app.Doceria.repository.ProdutoRepository;
+import com.app.Doceria.repository.VendaRepository;
 
 @Controller
 public class CarrinhoController {
@@ -39,20 +39,20 @@ public class CarrinhoController {
 	private FormaPagamentoRepository repositoryFormaPg;
 	
 	@Autowired
-	private CompraRepository repositoryCompra;
+	private VendaRepository repositoryVenda;
 	
 	@Autowired
-	private ItensCompraRepository repositoryItens;
+	private ItensVendaRepository repositoryItens;
 	
 	private String mensagemQuantidade = " ";
-	private List<ItensCompra> ItensCompra = new ArrayList<ItensCompra>();
-	private Compra compra = new Compra();
+	private List<ItensVenda> ItensVenda = new ArrayList<ItensVenda>();
+	private Venda venda = new Venda();
 	private Cliente cliente;
 	
 	private void calcularTotal() {
-		compra.setValorTotal(0.);
-		for(ItensCompra it: ItensCompra) {
-			compra.setValorTotal(compra.getValorTotal()+it.getValorTotal());
+		venda.setValorTotal(0.);
+		for(ItensVenda it: ItensVenda) {
+			venda.setValorTotal(venda.getValorTotal()+it.getValorTotal());
 		}
 	}
 	
@@ -60,8 +60,8 @@ public class CarrinhoController {
 	public ModelAndView carrinho() {
 		ModelAndView mv = new ModelAndView("clientes/cart");
 		calcularTotal();
-		mv.addObject("compra", compra);
-		mv.addObject("listaItens", ItensCompra);
+		mv.addObject("venda", venda);
+		mv.addObject("listaItens", ItensVenda);
 		return mv;
 	}
 	
@@ -72,23 +72,23 @@ public class CarrinhoController {
 
 		if (verificaEstoque(produto)) {
 			int controle = 0;
-			for (ItensCompra it : ItensCompra) {
-				if (it.getProduto().getId() == produto.getId()) {
-					it.setQuantidade(it.getQuantidade() + 1);
-					it.setValorTotal(0.);
-					it.setValorTotal(it.getValorTotal()+(it.getQuantidade() * it.getValorUnitario()));
+			for (ItensVenda iv : ItensVenda) {
+				if (iv.getProduto().getId() == produto.getId()) {
+					iv.setQuantidade(iv.getQuantidade() + 1);
+					iv.setValorTotal(0.);
+					iv.setValorTotal(iv.getValorTotal()+(iv.getQuantidade() * iv.getValorUnitario()));
 					controle = 1;
 					break;
 				}
 			}
 
 			if (controle == 0) {
-				ItensCompra itens = new ItensCompra();
+				ItensVenda itens = new ItensVenda();
 				itens.setProduto(produto);
 				itens.setValorUnitario(produto.getValor());
 				itens.setQuantidade(itens.getQuantidade() + 1);
 				itens.setValorTotal(itens.getValorTotal()+(itens.getQuantidade() * itens.getValorUnitario()));
-				ItensCompra.add(itens);
+				ItensVenda.add(itens);
 			}
 			
 			return "redirect:/cart";
@@ -104,11 +104,11 @@ public class CarrinhoController {
 		Boolean validador = true;
 		Boolean flag = false;
 		
-		for (ItensCompra it : ItensCompra) {
-			if (it.getProduto().getId() == produtoAux.getId()) {
+		for (ItensVenda iv : ItensVenda) {
+			if (iv.getProduto().getId() == produtoAux.getId()) {
 			    flag = true;
 				
-			    if (produtoAux.getQuantidadeEstoque() < (it.getQuantidade() + 1)){
+			    if (produtoAux.getQuantidadeEstoque() < (iv.getQuantidade() + 1)){
 					validador = false;
 					
 				}
@@ -130,13 +130,13 @@ public class CarrinhoController {
 	@GetMapping("/alterarQuantidade/{id}/{acao}")
 	public String alterarQuantidade(@PathVariable Long id, @PathVariable Integer acao, Model model) {
 		
-		for (ItensCompra it : ItensCompra) {
-			if (it.getProduto().getId() == (id)) {
+		for (ItensVenda iv : ItensVenda) {
+			if (iv.getProduto().getId() == (id)) {
 				if(acao.equals(1)) {
-					if (verificaEstoque(it.getProduto())) {
-						it.setQuantidade(it.getQuantidade()+1);
-						it.setValorTotal(0.);
-						it.setValorTotal(it.getValorTotal()+(it.getQuantidade() * it.getValorUnitario()));
+					if (verificaEstoque(iv.getProduto())) {
+						iv.setQuantidade(iv.getQuantidade()+1);
+						iv.setValorTotal(0.);
+						iv.setValorTotal(iv.getValorTotal()+(iv.getQuantidade() * iv.getValorUnitario()));
 					} else {
 						System.out.println("ESTOQUE INSUFICIENTE");
 						model.addAttribute("msg", "ESTOQUE INSUFICIENTE");
@@ -145,9 +145,9 @@ public class CarrinhoController {
 //						RequestContext.getCurrentInstance().execute("openAlert();");
 					}
 				}else if (acao == 0){
-					it.setQuantidade(it.getQuantidade() - 1);
-					it.setValorTotal(0.);
-					it.setValorTotal(it.getValorTotal()+(it.getQuantidade() * it.getValorUnitario()));
+					iv.setQuantidade(iv.getQuantidade() - 1);
+					iv.setValorTotal(0.);
+					iv.setValorTotal(iv.getValorTotal()+(iv.getQuantidade() * iv.getValorUnitario()));
 				}
 				break;
 			}
@@ -158,16 +158,16 @@ public class CarrinhoController {
 	
 	@GetMapping("/calcularvalor/{id}/{quantidade}")
 	public String calcularvalor(@PathVariable Long id, @PathVariable Integer quantidade){
-		compra.setValorTotal(0.);
+		venda.setValorTotal(0.);
 				
-		for (ItensCompra it : ItensCompra) {
-			if (it.getProduto().getId() == (id)) {
-					it.setQuantidade(quantidade);
-					it.setValorTotal(0.);
-					it.setValorTotal(it.getValorTotal()+(it.getQuantidade() * it.getValorUnitario()));
-					compra.setValorTotal(compra.getValorTotal() + it.getValorTotal());
+		for (ItensVenda iv : ItensVenda) {
+			if (iv.getProduto().getId() == (id)) {
+					iv.setQuantidade(quantidade);
+					iv.setValorTotal(0.);
+					iv.setValorTotal(iv.getValorTotal()+(iv.getQuantidade() * iv.getValorUnitario()));
+					venda.setValorTotal(venda.getValorTotal() + iv.getValorTotal());
 			} else {
-				compra.setValorTotal(compra.getValorTotal() + it.getValorTotal());
+				venda.setValorTotal(venda.getValorTotal() + iv.getValorTotal());
 			}
 		}
 		return "redirect:/cart";
@@ -176,9 +176,9 @@ public class CarrinhoController {
 	@GetMapping("/removerProduto/{id}")
 	public String removerProdutoCarrinho(@PathVariable Long id) {
 		
-		for (ItensCompra it : ItensCompra) {
-			if (it.getProduto().getId() == (id)) {
-				ItensCompra.remove(it);
+		for (ItensVenda iv : ItensVenda) {
+			if (iv.getProduto().getId() == (id)) {
+				ItensVenda.remove(iv);
 				break;
 			}
 		}
@@ -195,12 +195,12 @@ public class CarrinhoController {
 	}
 	
 	@GetMapping("/finalizar")
-	public ModelAndView finalizarCompra() {
+	public ModelAndView finalizarVenda() {
 		buscarUsuarioLogado();
 		ModelAndView mv = new ModelAndView("clientes/finalizar");
 		calcularTotal();
-		mv.addObject("compra", compra);
-		mv.addObject("listaItens", ItensCompra);
+		mv.addObject("venda", venda);
+		mv.addObject("listaItens", ItensVenda);
 		mv.addObject("cliente", cliente);
 		mv.addObject("formapg", repositoryFormaPg.findAll());
 		return mv;
@@ -219,20 +219,20 @@ public class CarrinhoController {
 		Optional<FormaDePagamento> op = repositoryFormaPg.findById(idForma);
 		FormaDePagamento formaPagamento = op.get();
 		ModelAndView mv = new ModelAndView("clientes/finalizou");
-		compra.setFormaPagamento(formaPagamento);
-		compra.setCliente(cliente);
-		repositoryCompra.saveAndFlush(compra);
+		venda.setFormaPagamento(formaPagamento);
+		venda.setCliente(cliente);
+		repositoryVenda.saveAndFlush(venda);
 		
-		for (ItensCompra c : ItensCompra) {
-			c.setCompra(compra);
-			Optional<Produto> prod = repositoryProduto.findById(c.getProduto().getId());
+		for (ItensVenda v : ItensVenda) {
+			v.setVenda(venda);
+			Optional<Produto> prod = repositoryProduto.findById(v.getProduto().getId());
 			Produto produto = prod.get();
-			produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - c.getQuantidade());
+			produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - v.getQuantidade());
 			repositoryProduto.saveAndFlush(produto);
-			repositoryItens.saveAndFlush(c);
+			repositoryItens.saveAndFlush(v);
 		}
-		ItensCompra = new ArrayList<>();
-		compra = new Compra();
+		ItensVenda = new ArrayList<>();
+		venda = new Venda();
 		
 		return mv;
 	}

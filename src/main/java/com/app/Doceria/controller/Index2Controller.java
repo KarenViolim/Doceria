@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.app.Doceria.model.ItensCompra;
+import com.app.Doceria.model.ItensVenda;
 import com.app.Doceria.repository.ProdutoRepository;
 
 @Controller
@@ -17,14 +17,14 @@ public class Index2Controller {
 	@Autowired
 	private ProdutoRepository repositoryProduto;
 	
-	private List<ItensCompra> ItensCompra = new ArrayList<ItensCompra>();
+	private List<ItensVenda> ItensVenda = new ArrayList<ItensVenda>();
 	
 	@GetMapping("/")
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("clientes/index");
 		// System.out.println("Produtos: "+ repositoryProduto.findAll().size());
 		mv.addObject("produtos", repositoryProduto.findAll());
-		mv.addObject("listaItens", ItensCompra);
+		mv.addObject("listaItens", ItensVenda);
 		return mv;
 	}
 

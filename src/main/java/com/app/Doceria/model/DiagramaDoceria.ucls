@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.2.4" icons="true" automaticImage="JPEG" always-add-relationships="false" 
-  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
-  router="FAN">  
+<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="com.app.Doceria.model.Funcionario" project="Doceria" 
     file="/Doceria/src/main/java/com/app/Doceria/model/Funcionario.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="765" width="178" x="43" y="976"/>    
@@ -29,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.app.Doceria.model.ItensCompra" project="Doceria" 
-    file="/Doceria/src/main/java/com/app/Doceria/model/ItensCompra.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="com.app.Doceria.model.ItensVenda" project="Doceria" 
+    file="/Doceria/src/main/java/com/app/Doceria/model/ItensVenda.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="387" width="166" x="499" y="32"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -92,8 +91,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.app.Doceria.model.Compra" project="Doceria" 
-    file="/Doceria/src/main/java/com/app/Doceria/model/Compra.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="com.app.Doceria.model.Venda" project="Doceria" 
+    file="/Doceria/src/main/java/com/app/Doceria/model/Venda.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="333" width="251" x="730" y="459"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -120,116 +119,172 @@
     </display>  
   </class>  
   <association id="14">    
-    <bendpoint x="-172" y="976"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="15" name="papeis"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="15" name="cidade">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="17">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="18" name="entrada"/>      
-      <multiplicity id="19" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="18" name="funcionario">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="20">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="21" name="funcionario"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="21" name="funcionario">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="23">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="24" name="compra"/>      
-      <multiplicity id="25" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="24" name="estado">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="26">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="27" name="produto"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="27" name="produto">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="29">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="30" name="formaPagamento"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+      <attribute id="30" name="cliente">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="33" name="compra">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="36" name="formaPagamento">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="32">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="33" name="papeis"/>      
-      <multiplicity id="34" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="35">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="36" name="cidade"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="38">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="39" name="funcionario"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="39" name="entrada">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="41">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="42" name="produto"/>      
-      <multiplicity id="43" minimum="0" maximum="1"/>    
+      <attribute id="42" name="produto">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="43" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="44">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="45" name="cliente"/>      
-      <multiplicity id="46" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="48" name="funcionario"/>      
-      <multiplicity id="49" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="45" name="funcionario">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="47">    
+    <bendpoint x="-172" y="976"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="48" name="papeis">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="50">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="51" name="cidade"/>      
-      <multiplicity id="52" minimum="0" maximum="1"/>    
+      <attribute id="51" name="papeis">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="52" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="53">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="54" name="estado"/>      
-      <multiplicity id="55" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="54" name="cidade">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

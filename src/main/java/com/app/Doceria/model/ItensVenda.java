@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "itens_compra")
-public class ItensCompra implements Serializable {
+@Table(name = "itens_venda")
+public class ItensVenda implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class ItensCompra implements Serializable {
 	@ManyToOne
 	private Produto produto;
 	@ManyToOne
-	private Compra compra;
+	private Venda venda;
 	private Integer quantidade=0;
 	private Double valorUnitario=0.;
 	private Double valorTotal=0.;
@@ -48,12 +48,12 @@ public class ItensCompra implements Serializable {
 		this.produto = produto;
 	}
 
-	public Compra getCompra() {
-		return compra;
+	public Venda getVenda() {
+		return venda;
 	}
 
-	public void setCompra(Compra compra) {
-		this.compra = compra;
+	public void setVenda(Venda venda) {
+		this.venda = venda;
 	}
 
 	public Integer getQuantidade() {

@@ -2,8 +2,8 @@ package com.app.Doceria.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.app.Doceria.model.Compra;
+import com.app.Doceria.model.Venda;
 
-public interface CompraRepository extends JpaRepository<Compra, Long>{
+public interface VendaRepository extends JpaRepository<Venda, Long>{
 	
 }
