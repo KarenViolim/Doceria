@@ -41,6 +41,8 @@ public class Funcionario implements Serializable {
 	private String email;
 	private String senha;
 	@ManyToOne
+	private Usuario usuario;
+	@ManyToOne
 	private Cidade cidade;
 	private String endereco;
 	private String numero;
@@ -103,6 +105,12 @@ public class Funcionario implements Serializable {
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	public Cidade getCidade() {
 		return cidade;

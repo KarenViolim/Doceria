@@ -75,7 +75,7 @@ public class ClienteController {
 		if(result.hasErrors()) {
 			return add(cliente);
 		}
-		cliente.setSenha(new BCryptPasswordEncoder().encode(cliente.getSenha()));
+		cliente.setSenha(new BCryptPasswordEncoder().encode(cliente.getUsuario().getCliente().getSenha()));
 		repositoryCliente.save(cliente);
 		
 		return add(new Cliente());
