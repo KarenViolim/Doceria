@@ -1,60 +1,77 @@
 package com.app.Doceria.controller;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import net.sf.jasperreports.engine.JRException;
+import com.app.Doceria.Conexao;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
-@RequestMapping("/relatorio")
-public class RelatorioController {
+public class RelatorioController implements Serializable {
 
 	@Autowired
-	private DataSource dataSource;
+	ServletContext context;
+//	private Date dataInicial;
+//	private Date dataFinal;
 
-	@PostMapping
-	public void imprimir(@RequestParam Map<String, Object> parametros, HttpServletResponse response)
-			throws JRException, SQLException, IOException {
-
-		parametros = parametros == null ? parametros = new HashMap<>() : parametros;
-
-		// Pega o arquivo .jasper localizado em resources
-		InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/livros.jasper");
-
-		// Cria o objeto JaperReport com o Stream do arquivo jasper
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-		// Passa para o JasperPrint o relatório, os parâmetros e a fonte dos dados, no
-		// caso uma conexão ao banco de dados
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, dataSource.getConnection());
-
-		// Configura a respota para o tipo PDF
-		response.setContentType("application/pdf");
-		// Define que o arquivo pode ser visualizado no navegador e também nome final do
-		// arquivo
-		// para fazer download do relatório troque 'inline' por 'attachment'
-		response.setHeader("Content-Disposition", "inline; filename=livros.pdf");
-
-		// Faz a exportação do relatório para o HttpServletResponse
-		final OutputStream outStream = response.getOutputStream();
-		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	@GetMapping("administrativo/relatorios/cliente")
+	public ModelAndView relCliente() {
+		ModelAndView mv = new ModelAndView("/administrativo/relatorios/cliente");
+		return mv;
 	}
+
+	@GetMapping("/administrativo/rel/clientes-pdf")
+	public void gerarRelatorioClientes(HttpServletResponse response) {
+		try {
+			InputStream stream = this.getClass()
+					.getResourceAsStream("/listaClientes.jrxml");
+
+			JasperReport report = JasperCompileManager.compileReport(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, null,
+					Conexao.getConection());
+			
+			response.setContentType("application/pdf");
+		    response.setHeader("Content-disposition", "attachement; filename=\"Relatório de Clientes.pdf\"");
+
+		    final OutputStream outStream = response.getOutputStream();
+		    JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// GETTERS AND SETTERS
+
+//	public Date getDataInicial() {
+//		return dataInicial;
+//	}
+//
+//	public void setDataInicial(Date dataInicial) {
+//		this.dataInicial = dataInicial;
+//	}
+//
+//	public Date getDataFinal() {
+//		return dataFinal;
+//	}
+//
+//	public void setDataFinal(Date dataFinal) {
+//		this.dataFinal = dataFinal;
+//	}
 
 }

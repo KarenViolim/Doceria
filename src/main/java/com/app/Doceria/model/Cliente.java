@@ -2,6 +2,7 @@ package com.app.Doceria.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -104,5 +105,9 @@ public class Cliente implements Serializable{
 	}
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+	public List<Cliente> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

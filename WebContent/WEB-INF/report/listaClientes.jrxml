@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaClientes" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0af5cde7-898e-452b-9bbc-b6e6b796e48b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     cliente."id" AS cliente_id,
+     cliente."nome" AS cliente_nome,
+     cliente."cpf" AS cliente_cpf,
+     cliente."telefone" AS cliente_telefone,
+     cliente."endereco" AS cliente_endereco,
+     cliente."numero" AS cliente_numero,
+     cliente."cidade_id" AS cliente_cidade_id,
+     cidade."nome" AS cidade_nome
+FROM
+     "public"."cliente" cliente INNER JOIN "cidade" cidade ON cliente."cidade_id" = cidade."id"
+ORDER BY
+     cliente."nome" ASC]]>
+	</queryString>
+	<field name="cliente_id" class="java.lang.Long"/>
+	<field name="cliente_nome" class="java.lang.String"/>
+	<field name="cliente_cpf" class="java.lang.String"/>
+	<field name="cliente_telefone" class="java.lang.String"/>
+	<field name="cliente_endereco" class="java.lang.String"/>
+	<field name="cliente_numero" class="java.lang.String"/>
+	<field name="cliente_cidade_id" class="java.lang.Long"/>
+	<field name="cidade_nome" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="116">
+			<image>
+				<reportElement x="1" y="0" width="109" height="102" uuid="fcfa9160-3437-4e21-8a32-4394fdef9c36"/>
+				<imageExpression><![CDATA["D:\\Downloads\\karen candy's (1).jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="446" y="0" width="109" height="102" uuid="75b52dd4-9f93-4dcb-beec-3612f0e84a76"/>
+				<imageExpression><![CDATA["D:\\Downloads\\karen candy's (1).jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="213" y="11" width="126" height="20" uuid="b6e45586-fe3b-440d-a3b1-b2c97210c864"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KAREN CANDY'S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="34" width="267" height="16" uuid="181cb123-ee5b-4f47-ac21-4251c4100677"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Rua Luís Paviani Nº 39 - Centro - Nova Londrina/PR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="50" width="267" height="16" uuid="3f040489-4eff-4f2f-a9ae-11589f72ef7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[(44)99826-4674]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="67" width="232" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE CLIENTES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<detail>
+		<band height="63">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="56" width="555" height="3" forecolor="#999999" uuid="2e8cd6ce-12ba-4205-94e7-70b379ab9fe9"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="15" width="265" height="13" uuid="a5fb14b7-f8d9-4288-ab63-22b4c09528d8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="419" y="15" width="136" height="13" uuid="f5b8c9c2-2cb0-4072-b5f1-7a56f172a512"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_telefone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1" y="43" width="554" height="13" uuid="7bafd8e3-f361-4d6e-83e4-093bd1c441e7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_endereco}.toUpperCase() + " Nº " + $F{cliente_numero} + " - " + $F{cidade_nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="28" width="555" height="15" forecolor="#000000" backcolor="#FFCBFF" uuid="de8a9274-8ae0-4466-a9ea-fa6931ae5586"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENDEREÇO COMPLETO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="266" y="15" width="153" height="13" uuid="3b062731-6ae7-4f9b-aa30-d9b4e0781d6b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente_cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="267" y="0" width="153" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ff3130eb-4625-4b4a-a790-2363d52044a0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="266" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="420" y="0" width="135" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ffa711fa-0c7a-4242-a557-c1395eacf0c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONE]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="63">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="15" width="515" height="13" backcolor="#FFCBFF" uuid="74026af9-349c-435c-9c57-3dc7f51b49c1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="514" y="15" width="40" height="13" backcolor="#FFCBFF" uuid="e712c2c5-51d0-4bcc-ba89-d81cd2abffe6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy HH:mm">
+				<reportElement x="1" y="49" width="177" height="14" uuid="065856a4-52cc-4bb9-8892-4083e6b0264f"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="368" y="49" width="175" height="14" uuid="416d5c98-0515-4732-8253-7dd70c2efb60"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Desenvolvido por Karen Cristina Violim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="543" y="46" width="12" height="13" uuid="a6ea9186-90cc-417c-aea3-751856159eeb"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[®]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30">
+			<staticText>
+				<reportElement mode="Opaque" x="410" y="8" width="105" height="13" forecolor="#000000" backcolor="#FFCBFF" uuid="472532fe-5e7c-49bf-8dce-a23fb97c1002"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE REGISTROS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="515" y="8" width="39" height="13" uuid="063c35bb-a225-4551-b0bd-bb2cde25c602"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
