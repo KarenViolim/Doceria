@@ -4,23 +4,27 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.Doceria.Conexao;
+import com.app.Doceria.model.DataContainer;
+import com.app.Doceria.model.Filtros;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -34,51 +38,58 @@ public class RelatorioController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	ServletContext context;
-	private Date dtInicio;
-	private Date dtFim;
 
-	//CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE CLIENTES
+	// CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE CLIENTES
 	@GetMapping("administrativo/relatorios/cliente")
 	public ModelAndView relCliente() {
 		ModelAndView mv = new ModelAndView("/administrativo/relatorios/cliente");
 		return mv;
 	}
 
-	//CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE VENDAS POR PERÍODO
-	@GetMapping("administrativo/relatorios/vendas")
-	public ModelAndView relVendas() {
-		ModelAndView mv = new ModelAndView("/administrativo/relatorios/vendas");
-		return mv;
-	}
-
-	//MÉTODO QUE GERA O RELATÓRIO DE CLIENTES
+	// MÉTODO QUE GERA O RELATÓRIO DE CLIENTES
 	@GetMapping("/administrativo/rel/clientes-pdf")
 	public void gerarRelatorioClientes(HttpServletResponse response) {
 		try {
 			InputStream stream = this.getClass().getResourceAsStream("/listaClientes.jrxml");
-
+			
 			JasperReport report = JasperCompileManager.compileReport(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, Conexao.getConection());
-
+			
 			response.setContentType("application/pdf");
 			response.setHeader("Content-disposition", "inline; filename=\"Relatório de Clientes.pdf\"");
-
+			
 			final OutputStream outStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	// CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE VENDAS POR
+	// PERÍODO
+	@GetMapping("administrativo/relatorios/vendas")
+	public String relVendas(Model model, final DataContainer dataContainer) {
+		if(dataContainer.getDateTime()==null) {
+			dataContainer.setDateTime(LocalDateTime.now());
+		}
+		model.addAttribute("filtro", new Filtros());
+		return "/administrativo/relatorios/vendas";
+	}
 
-	//MÉTODO QUE GERA O RELATÓRIO DE VENDAS POR PERÍODO
-	@RequestMapping(value = "/administrativo/rel/vendas-pdf", method = RequestMethod.GET)
-	@ResponseBody
-	public void gerarRelatorioVendas(HttpServletResponse response) {
+
+	// MÉTODO QUE GERA O RELATÓRIO DE VENDAS POR PERÍODO
+	@PostMapping(value = "/administrativo/rel/vendas-pdf")
+	public void gerarRelatorioVendas(@ModelAttribute("filtro") Filtros filtro, HttpServletResponse response,
+			HttpServletRequest request) {
+//		System.out.println(request.getParameter("dtInicio"));
+//		System.out.println(filtro.getDtInicio().substring(0, 10));
+//		System.out.println(filtro.getDtFim());
 		try {
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
 			HashMap<String, Object> p = new HashMap<>();
-			p.put("dtInicio", dtInicio);
-			p.put("dtFim", dtFim);
+			p.put("dtInicio", getDataFormatada(filtro.getDtInicio()));
+			p.put("dtFim", getDataFormatada(filtro.getDtFim()));
 
 			InputStream stream = this.getClass().getResourceAsStream("/vendas.jrxml");
 
@@ -95,22 +106,9 @@ public class RelatorioController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
-	// GETTERS AND SETTERS
-	public Date getDtInicio() {
-		return dtInicio;
+	
+	private Date getDataFormatada(String dataString) throws ParseException {
+		SimpleDateFormat modelo = new SimpleDateFormat("yyyy-MM-dd");
+		return modelo.parse(dataString);
 	}
-
-	public void setDtInicial(Date dtInicio) {
-		this.dtInicio = dtInicio;
-	}
-
-	public Date getDtFim() {
-		return dtFim;
-	}
-
-	public void setDtFim(Date dtFim) {
-		this.dtFim = dtFim;
-	}
-
 }

@@ -1,5 +1,6 @@
 package com.app.Doceria.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -165,12 +166,18 @@ public class CarrinhoController {
 					iv.setQuantidade(quantidade);
 					iv.setValorTotal(0.);
 					iv.setValorTotal(iv.getValorTotal()+(iv.getQuantidade() * iv.getValorUnitario()));
+//					iv.setValorTotal(getValorFormatado(iv.getValorTotal());
 					venda.setValorTotal(venda.getValorTotal() + iv.getValorTotal());
 			} else {
 				venda.setValorTotal(venda.getValorTotal() + iv.getValorTotal());
 			}
 		}
 		return "redirect:/cart";
+	}
+	
+	private Double getValorFormatado(Double valorAux) {
+		DecimalFormat formato = new DecimalFormat("#.##");      
+		return Double.valueOf(formato.format(valorAux));
 	}
 	
 	@GetMapping("/removerProduto/{id}")
@@ -222,7 +229,7 @@ public class CarrinhoController {
 		venda.setFormaPagamento(formaPagamento);
 		venda.setCliente(cliente);
 		repositoryVenda.saveAndFlush(venda);
-		
+	
 		for (ItensVenda v : ItensVenda) {
 			v.setVenda(venda);
 			Optional<Produto> prod = repositoryProduto.findById(v.getProduto().getId());
