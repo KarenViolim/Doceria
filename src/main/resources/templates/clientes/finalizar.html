@@ -53,11 +53,11 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="ht__coupon__code">
-								<label class="control-label col-md-4" for="formapg">FORMA
+							<div class="ht__coupon__code col-md-6">
+								<label class="control-label col-md-12" for="formapg">FORMA
 									DE PAGAMENTO: <span class="required">*</span>
 								</label>
-								<div class="col-6">
+								<div class="col-12">
 									<select name="idForma" class="form-control">
 										<option th:each="f: ${formapg}" th:value="${f.id}"
 											th:text="${f.formaPagamento}"></option>
