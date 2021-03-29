@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vendas" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0af5cde7-898e-452b-9bbc-b6e6b796e48b">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="91"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="dtInicio" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,28 +11,24 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     venda."id" AS venda_id,
-     venda."data_venda" AS venda_data_venda,
-     venda."valor_total" AS venda_valor_total,
-     venda."cliente_id" AS venda_cliente_id,
-     cliente."nome" AS cliente_nome,
-     venda."forma_pagamento_id" AS venda_forma_pagamento_id,
-     forma_de_pagamento."forma_pagamento" AS forma_de_pagamento_forma_pagamento
+     SUM(itens_venda."quantidade") AS itens_venda_quantidade,
+     itens_venda."produto_id" AS itens_venda_produto_id,
+     produto."nome_produto" AS produto_nome_produto
 FROM
-     "public"."cliente" cliente INNER JOIN "public"."venda" venda ON cliente."id" = venda."cliente_id"
-     INNER JOIN "public"."forma_de_pagamento" forma_de_pagamento ON venda."forma_pagamento_id" = forma_de_pagamento."id"
-WHERE
-     venda."data_venda" BETWEEN $P{dtInicio} AND $P{dtFim}
+     "public"."produto" produto INNER JOIN "public"."itens_venda" itens_venda ON produto."id" = itens_venda."produto_id"
+     INNER JOIN "public"."venda" venda ON itens_venda."venda_id" = venda."id"
+GROUP BY
+     itens_venda."produto_id",
+     produto."nome_produto"
 ORDER BY
-     venda."data_venda" ASC]]>
+     SUM(itens_venda."quantidade") DESC]]>
 	</queryString>
-	<field name="venda_id" class="java.lang.Long"/>
-	<field name="venda_data_venda" class="java.sql.Timestamp"/>
-	<field name="venda_valor_total" class="java.lang.Double"/>
-	<field name="venda_cliente_id" class="java.lang.Long"/>
-	<field name="cliente_nome" class="java.lang.String"/>
-	<field name="venda_forma_pagamento_id" class="java.lang.Long"/>
-	<field name="forma_de_pagamento_forma_pagamento" class="java.lang.String"/>
+	<field name="itens_venda_quantidade" class="java.lang.Long"/>
+	<field name="itens_venda_produto_id" class="java.lang.Long"/>
+	<field name="produto_nome_produto" class="java.lang.String"/>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{itens_venda_quantidade}]]></variableExpression>
+	</variable>
 	<background>
 		<band/>
 	</background>
@@ -68,11 +64,11 @@ ORDER BY
 				<text><![CDATA[(44)99826-4674]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="67" width="232" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
+				<reportElement x="157" y="66" width="261" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE VENDAS]]></text>
+				<text><![CDATA[PRODUTOS MAIS VENDIDOS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="106" width="555" height="13" forecolor="#333333" uuid="4c3968cf-3a4f-4f94-a463-515e7f5265f8"/>
@@ -110,71 +106,46 @@ ORDER BY
 	<columnHeader>
 		<band height="15">
 			<staticText>
-				<reportElement mode="Opaque" x="117" y="0" width="251" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement mode="Opaque" x="60" y="0" width="350" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CLIENTE]]></text>
+				<text><![CDATA[NOME PRODUTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="39" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="17aeaa05-cac2-4746-a528-31699c81488f"/>
+				<reportElement mode="Opaque" x="0" y="0" width="61" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="17aeaa05-cac2-4746-a528-31699c81488f"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="38" y="0" width="79" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="178df0de-1790-4998-8598-a1b5815da0c2"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[DATA VENDA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="474" y="0" width="81" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="4f5f8e06-8431-4b4a-bb91-d6373c41a721"/>
+				<reportElement mode="Opaque" x="409" y="0" width="146" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="4f5f8e06-8431-4b4a-bb91-d6373c41a721"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[VALOR TOTAL]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="368" y="0" width="106" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="99ef025b-6565-46c5-b8d1-a2e7080a756c"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[FORMA PAG.]]></text>
+				<text><![CDATA[QUANTIDADE]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="17">
-			<textField isStretchWithOverflow="true">
-				<reportElement x="117" y="2" width="251" height="13" uuid="a5fb14b7-f8d9-4288-ab63-22b4c09528d8"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_nome}.toUpperCase()]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="1" y="2" width="38" height="13" uuid="f8742e58-6100-4573-addb-c70c849cbd33"/>
-				<textFieldExpression><![CDATA[$F{venda_id}]]></textFieldExpression>
+				<reportElement x="1" y="2" width="60" height="13" uuid="f8742e58-6100-4573-addb-c70c849cbd33"/>
+				<textFieldExpression><![CDATA[$F{itens_venda_produto_id}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="38" y="2" width="79" height="13" uuid="58c1923a-9912-43c9-b4c7-d047d2d029d2"/>
-				<textFieldExpression><![CDATA[$F{venda_data_venda}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="368" y="2" width="106" height="13" uuid="5a1cee3e-f8d0-44e8-9f04-a3737d1cc306"/>
-				<textFieldExpression><![CDATA[$F{forma_de_pagamento_forma_pagamento}]]></textFieldExpression>
-			</textField>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="474" y="2" width="81" height="13" uuid="329cbbee-48b9-423e-9659-01b2547fc556"/>
+			<textField pattern="###0">
+				<reportElement x="411" y="2" width="144" height="13" uuid="329cbbee-48b9-423e-9659-01b2547fc556"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{venda_valor_total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{itens_venda_quantidade}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="16" width="554" height="1" forecolor="#CCCCCC" uuid="2ce3782a-45d2-413e-9256-40fe50669f27"/>
 			</line>
+			<textField>
+				<reportElement x="61" y="2" width="350" height="13" uuid="8fdba19b-9296-485c-a105-b6db4cc35a8c"/>
+				<textFieldExpression><![CDATA[$F{produto_nome_produto}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
@@ -219,18 +190,18 @@ ORDER BY
 	<summary>
 		<band height="30">
 			<staticText>
-				<reportElement mode="Opaque" x="410" y="8" width="105" height="13" forecolor="#000000" backcolor="#FFCBFF" uuid="472532fe-5e7c-49bf-8dce-a23fb97c1002"/>
+				<reportElement mode="Opaque" x="421" y="8" width="97" height="13" forecolor="#000000" backcolor="#FFCBFF" uuid="472532fe-5e7c-49bf-8dce-a23fb97c1002"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TOTAL DE REGISTROS:]]></text>
+				<text><![CDATA[QUANTIDADE TOTAL:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="###0">
 				<reportElement x="515" y="8" width="39" height="13" uuid="063c35bb-a225-4551-b0bd-bb2cde25c602"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

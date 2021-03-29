@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaClientes" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0af5cde7-898e-452b-9bbc-b6e6b796e48b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoquepositivo" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0af5cde7-898e-452b-9bbc-b6e6b796e48b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
-     cliente."id" AS cliente_id,
-     cliente."nome" AS cliente_nome,
-     cliente."cpf" AS cliente_cpf,
-     cliente."telefone" AS cliente_telefone,
-     cliente."endereco" AS cliente_endereco,
-     cliente."numero" AS cliente_numero,
-     cliente."cidade_id" AS cliente_cidade_id,
-     cidade."nome" AS cidade_nome
+     produto."id" AS produto_id,
+     produto."nome_produto" AS produto_nome_produto,
+     produto."quantidade_estoque" AS produto_quantidade_estoque
 FROM
-     "public"."cliente" cliente INNER JOIN "cidade" cidade ON cliente."cidade_id" = cidade."id"
+     "public"."produto" produto
+WHERE
+     produto."quantidade_estoque" > 0
 ORDER BY
-     cliente."nome" ASC]]>
+     produto.nome_produto ASC]]>
 	</queryString>
-	<field name="cliente_id" class="java.lang.Long"/>
-	<field name="cliente_nome" class="java.lang.String"/>
-	<field name="cliente_cpf" class="java.lang.String"/>
-	<field name="cliente_telefone" class="java.lang.String"/>
-	<field name="cliente_endereco" class="java.lang.String"/>
-	<field name="cliente_numero" class="java.lang.String"/>
-	<field name="cliente_cidade_id" class="java.lang.Long"/>
-	<field name="cidade_nome" class="java.lang.String"/>
+	<field name="produto_id" class="java.lang.Long"/>
+	<field name="produto_nome_produto" class="java.lang.String"/>
+	<field name="produto_quantidade_estoque" class="java.lang.Double"/>
 	<background>
 		<band/>
 	</background>
@@ -61,11 +53,11 @@ ORDER BY
 				<text><![CDATA[(44)99826-4674]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="67" width="232" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
+				<reportElement x="183" y="66" width="198" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE CLIENTES]]></text>
+				<text><![CDATA[ESTOQUE POSITIVO]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -73,65 +65,51 @@ ORDER BY
 		<band/>
 	</pageHeader>
 	<detail>
-		<band height="59">
+		<band height="31">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="1" y="15" width="265" height="13" uuid="a5fb14b7-f8d9-4288-ab63-22b4c09528d8"/>
+				<reportElement x="49" y="15" width="370" height="13" uuid="a5fb14b7-f8d9-4288-ab63-22b4c09528d8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{produto_nome_produto}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="419" y="15" width="136" height="13" uuid="f5b8c9c2-2cb0-4072-b5f1-7a56f172a512"/>
+				<reportElement x="418" y="15" width="137" height="13" uuid="f5b8c9c2-2cb0-4072-b5f1-7a56f172a512"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_telefone}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="1" y="43" width="554" height="13" uuid="7bafd8e3-f361-4d6e-83e4-093bd1c441e7"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_endereco}.toUpperCase() + " Nº " + $F{cliente_numero} + " - " + $F{cidade_nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{produto_quantidade_estoque}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="28" width="555" height="15" forecolor="#000000" backcolor="#FFCBFF" uuid="de8a9274-8ae0-4466-a9ea-fa6931ae5586"/>
+				<reportElement mode="Opaque" x="1" y="0" width="49" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ENDEREÇO COMPLETO]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="266" y="15" width="153" height="13" uuid="3b062731-6ae7-4f9b-aa30-d9b4e0781d6b"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_cpf}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement mode="Opaque" x="267" y="0" width="153" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ff3130eb-4625-4b4a-a790-2363d52044a0"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CPF]]></text>
+				<text><![CDATA[CÓD.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="0" width="266" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[NOME CLIENTE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="420" y="0" width="135" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ffa711fa-0c7a-4242-a557-c1395eacf0c0"/>
+				<reportElement mode="Opaque" x="418" y="0" width="137" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ffa711fa-0c7a-4242-a557-c1395eacf0c0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TELEFONE]]></text>
+				<text><![CDATA[QUANTIDADE ESTOQUE]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="49" y="0" width="370" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="5de28fb2-3b4b-4810-9dfc-c8017479d245"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME PRODUTO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="15" width="49" height="13" uuid="31ad6727-dc12-49f1-9834-d303028cd9f2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produto_id}]]></textFieldExpression>
+			</textField>
 			<line>
-				<reportElement x="0" y="58" width="554" height="1" forecolor="#CCCCCC" uuid="fef43019-7947-4a31-877d-526e090562cc"/>
+				<reportElement x="1" y="30" width="554" height="1" forecolor="#CCCCCC" uuid="7c2560f2-3628-4d5c-97a3-215c4b99f453"/>
 			</line>
 		</band>
 	</detail>

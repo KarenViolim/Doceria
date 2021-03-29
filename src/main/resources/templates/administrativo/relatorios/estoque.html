@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	layout:decorate="~{administrativo/fragments/layout}">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Página de Cadastros</title>
+</head>
+<body>
+	<!-- page content -->
+	<div class="right_col" role="main" layout:fragment="corpo">
+		<div class="">
+			<div class="page-title">
+				<div class="title_left">
+					<h3>Relatórios</h3>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+							<h2>Relatório de Produtos com Estoque Positivo</h2>
+							<div class="clearfix"></div>
+						</div>
+						<div class="x_content">
+
+							<form class="form-horizontal form-label-left"
+								th:action="@{/administrativo/rel/estoque_positivo-pdf}" method="get">
+
+								<div class="ui-g-12 ui-md-12 ui-lg-12 ui-fluid"
+									style="margin-top: 10px">
+									<button style="width: 150px" class="btn btn-success mb-2">GERAR</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /page content -->
+</body>
+</html>

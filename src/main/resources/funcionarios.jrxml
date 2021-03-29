@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaClientes" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0af5cde7-898e-452b-9bbc-b6e6b796e48b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionarios" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0af5cde7-898e-452b-9bbc-b6e6b796e48b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT
-     cliente."id" AS cliente_id,
-     cliente."nome" AS cliente_nome,
-     cliente."cpf" AS cliente_cpf,
-     cliente."telefone" AS cliente_telefone,
-     cliente."endereco" AS cliente_endereco,
-     cliente."numero" AS cliente_numero,
-     cliente."cidade_id" AS cliente_cidade_id,
-     cidade."nome" AS cidade_nome
+     funcionario."id" AS funcionario_id,
+     funcionario."cpf" AS funcionario_cpf,
+     funcionario."nome" AS funcionario_nome,
+     funcionario."telefone" AS funcionario_telefone,
+     papel."nome" AS papel_nome
 FROM
-     "public"."cliente" cliente INNER JOIN "cidade" cidade ON cliente."cidade_id" = cidade."id"
+     "public"."papel" papel INNER JOIN "public"."funcionario" funcionario ON papel."id" = funcionario."papeis_id"
 ORDER BY
-     cliente."nome" ASC]]>
+     funcionario."nome" ASC]]>
 	</queryString>
-	<field name="cliente_id" class="java.lang.Long"/>
-	<field name="cliente_nome" class="java.lang.String"/>
-	<field name="cliente_cpf" class="java.lang.String"/>
-	<field name="cliente_telefone" class="java.lang.String"/>
-	<field name="cliente_endereco" class="java.lang.String"/>
-	<field name="cliente_numero" class="java.lang.String"/>
-	<field name="cliente_cidade_id" class="java.lang.Long"/>
-	<field name="cidade_nome" class="java.lang.String"/>
+	<field name="funcionario_id" class="java.lang.Long"/>
+	<field name="funcionario_cpf" class="java.lang.String"/>
+	<field name="funcionario_nome" class="java.lang.String"/>
+	<field name="funcionario_telefone" class="java.lang.String"/>
+	<field name="papel_nome" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>
@@ -61,11 +55,11 @@ ORDER BY
 				<text><![CDATA[(44)99826-4674]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="67" width="232" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
+				<reportElement x="144" y="66" width="286" height="34" uuid="bab6afad-dc65-4b71-8363-9baa0b12263a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RELATÓRIO DE CLIENTES]]></text>
+				<text><![CDATA[FUNCIONÁRIOS CADASTRADOS]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -73,65 +67,79 @@ ORDER BY
 		<band/>
 	</pageHeader>
 	<detail>
-		<band height="59">
+		<band height="30">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="1" y="15" width="265" height="13" uuid="a5fb14b7-f8d9-4288-ab63-22b4c09528d8"/>
+				<reportElement x="39" y="15" width="216" height="13" uuid="a5fb14b7-f8d9-4288-ab63-22b4c09528d8"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{funcionario_nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="419" y="15" width="136" height="13" uuid="f5b8c9c2-2cb0-4072-b5f1-7a56f172a512"/>
+				<reportElement x="446" y="15" width="109" height="13" uuid="f5b8c9c2-2cb0-4072-b5f1-7a56f172a512"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_telefone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{funcionario_telefone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="1" y="43" width="554" height="13" uuid="7bafd8e3-f361-4d6e-83e4-093bd1c441e7"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_endereco}.toUpperCase() + " Nº " + $F{cliente_numero} + " - " + $F{cidade_nome}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement mode="Opaque" x="0" y="28" width="555" height="15" forecolor="#000000" backcolor="#FFCBFF" uuid="de8a9274-8ae0-4466-a9ea-fa6931ae5586"/>
-				<textElement verticalAlignment="Middle">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ENDEREÇO COMPLETO]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="266" y="15" width="153" height="13" uuid="3b062731-6ae7-4f9b-aa30-d9b4e0781d6b"/>
+				<reportElement x="254" y="15" width="100" height="13" uuid="3b062731-6ae7-4f9b-aa30-d9b4e0781d6b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cliente_cpf}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{funcionario_cpf}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="267" y="0" width="153" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ff3130eb-4625-4b4a-a790-2363d52044a0"/>
+				<reportElement mode="Opaque" x="254" y="0" width="100" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ff3130eb-4625-4b4a-a790-2363d52044a0"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CPF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="1" y="0" width="266" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
+				<reportElement mode="Opaque" x="39" y="0" width="216" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="b90e4c16-314f-4af0-85c4-27efab808d62"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[NOME CLIENTE]]></text>
+				<text><![CDATA[NOME FUNCIONÁRIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="420" y="0" width="135" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ffa711fa-0c7a-4242-a557-c1395eacf0c0"/>
+				<reportElement mode="Opaque" x="446" y="0" width="109" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="ffa711fa-0c7a-4242-a557-c1395eacf0c0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TELEFONE]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="39" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="071dbc8e-4119-4c12-8a4e-f96a5280117d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓD.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="354" y="0" width="93" height="15" forecolor="#FFFFFF" backcolor="#AD538B" uuid="6bef9dde-f1af-4552-83ae-afa05b41b7bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="354" y="15" width="92" height="13" uuid="fd664e68-f56b-4f63-9414-96e6481e15e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{papel_nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="15" width="39" height="13" uuid="f17a7ef4-0180-44ab-befc-6ce3d90e58fe"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcionario_id}]]></textFieldExpression>
+			</textField>
 			<line>
-				<reportElement x="0" y="58" width="554" height="1" forecolor="#CCCCCC" uuid="fef43019-7947-4a31-877d-526e090562cc"/>
+				<reportElement x="0" y="29" width="554" height="1" forecolor="#CCCCCC" uuid="53c36bfb-5731-4596-b780-d826011b48a0"/>
 			</line>
 		</band>
 	</detail>

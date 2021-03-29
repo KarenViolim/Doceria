@@ -51,32 +51,31 @@ public class RelatorioController implements Serializable {
 	public void gerarRelatorioClientes(HttpServletResponse response) {
 		try {
 			InputStream stream = this.getClass().getResourceAsStream("/listaClientes.jrxml");
-			
+
 			JasperReport report = JasperCompileManager.compileReport(stream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, Conexao.getConection());
-			
+
 			response.setContentType("application/pdf");
 			response.setHeader("Content-disposition", "inline; filename=\"Relatório de Clientes.pdf\"");
-			
+
 			final OutputStream outStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE VENDAS POR
 	// PERÍODO
 	@GetMapping("administrativo/relatorios/vendas")
 	public String relVendas(Model model, final DataContainer dataContainer) {
-		if(dataContainer.getDateTime()==null) {
+		if (dataContainer.getDateTime() == null) {
 			dataContainer.setDateTime(LocalDateTime.now());
 		}
 		model.addAttribute("filtro", new Filtros());
 		return "/administrativo/relatorios/vendas";
 	}
-
 
 	// MÉTODO QUE GERA O RELATÓRIO DE VENDAS POR PERÍODO
 	@PostMapping(value = "/administrativo/rel/vendas-pdf")
@@ -86,7 +85,7 @@ public class RelatorioController implements Serializable {
 //		System.out.println(filtro.getDtInicio().substring(0, 10));
 //		System.out.println(filtro.getDtFim());
 		try {
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			HashMap<String, Object> p = new HashMap<>();
 			p.put("dtInicio", getDataFormatada(filtro.getDtInicio()));
 			p.put("dtFim", getDataFormatada(filtro.getDtFim()));
@@ -106,9 +105,102 @@ public class RelatorioController implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
+	// CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE PRODUTOS MAIS
+	// VENDIDOS
+	@GetMapping("administrativo/relatorios/produtosvendidos")
+	public String relMaisVendidos(Model model, final DataContainer dataContainer) {
+		if (dataContainer.getDateTime() == null) {
+			dataContainer.setDateTime(LocalDateTime.now());
+		}
+		model.addAttribute("filtro", new Filtros());
+		return "/administrativo/relatorios/produtosvendidos";
+	}
+
+	// MÉTODO QUE GERA O RELATÓRIO DE PRODUTOS MAIS VENDIDOS
+	@PostMapping(value = "/administrativo/rel/produtos_vendidos-pdf")
+	public void gerarRelatorioMaisVendidos(@ModelAttribute("filtro") Filtros filtro, HttpServletResponse response,
+			HttpServletRequest request) {
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			HashMap<String, Object> p = new HashMap<>();
+			p.put("dtInicio", getDataFormatada(filtro.getDtInicio()));
+			p.put("dtFim", getDataFormatada(filtro.getDtFim()));
+
+			InputStream stream = this.getClass().getResourceAsStream("/produtos_vendidos.jrxml");
+
+			JasperReport report = JasperCompileManager.compileReport(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, p, Conexao.getConection());
+
+			response.setContentType("application/pdf");
+			response.setHeader("Content-disposition", "inline; filename=\"Relatório de Mais Vendidos.pdf\"");
+
+			final OutputStream outStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE ESTOQUE
+	// POSITIVO
+	@GetMapping("administrativo/relatorios/estoque")
+	public ModelAndView relEstoque() {
+		ModelAndView mv = new ModelAndView("/administrativo/relatorios/estoque");
+		return mv;
+	}
+
+	// MÉTODO QUE GERA O RELATÓRIO DE ESTOQUE POSITIVO
+	@GetMapping("/administrativo/rel/estoque_positivo-pdf")
+	public void gerarRelatorioEstoque(HttpServletResponse response) {
+		try {
+			InputStream stream = this.getClass().getResourceAsStream("/estoque_positivo.jrxml");
+
+			JasperReport report = JasperCompileManager.compileReport(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, Conexao.getConection());
+
+			response.setContentType("application/pdf");
+			response.setHeader("Content-disposition", "inline; filename=\"Relatório de Estoque Positivo.pdf\"");
+
+			final OutputStream outStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// CHAMADA PARA A PÁGINA QUE TEM O BOTÃO PARA GERAR O RELATÓRIO DE FUNCIONÁRIOS
+	@GetMapping("administrativo/relatorios/funcionarios")
+	public ModelAndView relFuncionarios() {
+		ModelAndView mv = new ModelAndView("/administrativo/relatorios/funcionarios");
+		return mv;
+	}
+
+	// MÉTODO QUE GERA O RELATÓRIO DE FUNCIONÁRIOS
+	@GetMapping("/administrativo/rel/funcionarios-pdf")
+	public void gerarRelatorioFuncionario(HttpServletResponse response) {
+		try {
+			InputStream stream = this.getClass().getResourceAsStream("/funcionarios.jrxml");
+
+			JasperReport report = JasperCompileManager.compileReport(stream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, null, Conexao.getConection());
+
+			response.setContentType("application/pdf");
+			response.setHeader("Content-disposition", "inline; filename=\"Relatório de Funcionários.pdf\"");
+
+			final OutputStream outStream = response.getOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private Date getDataFormatada(String dataString) throws ParseException {
 		SimpleDateFormat modelo = new SimpleDateFormat("yyyy-MM-dd");
 		return modelo.parse(dataString);
 	}
+
 }
