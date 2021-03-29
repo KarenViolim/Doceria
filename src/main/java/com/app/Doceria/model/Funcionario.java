@@ -10,10 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -27,7 +26,7 @@ public class Funcionario implements Serializable {
 	@Column(nullable=false, length=250)
 	@NotEmpty(message="O nome é obrigatório")
 	private String nome;
-	@Column(nullable=false, length=250)
+	@CPF(message = "O CPF É INVÁLIDO!")
 	@NotEmpty(message="O CPF é obrigatório")
 	private String cpf;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

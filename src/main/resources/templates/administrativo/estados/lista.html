@@ -44,10 +44,11 @@
 									<td th:text="${estado.nome}"></td>
 									<td th:text="${estado.sigla}"></td>
 									<td><a class="btn btn-warning btn-xs"
-										th:href="@{/administrativo/estados/editarEstado/{id}(id=${estado.id})}">Editar</a> <a class="btn btn-info btn-sm" data-toggle="modal"
-								data-target="#modal-warning"
-								th:attr="data-target='#modal-warning'+${estado.id }"><span
-									class="oi oi-circle-x" title="Remover" aria-hidden="true"></span></a>
+										th:href="@{/administrativo/estados/editarEstado/{id}(id=${estado.id})}">Editar</a> 
+										<a class="btn btn-danger btn-xs" style="height: 24px;" data-toggle="modal"
+										data-target="#modal-warning"
+										th:attr="data-target='#modal-warning'+${estado.id }"><span
+										class="oi oi-circle-x" aria-hidden="true">Remover</span></a>
 
 								<div class="modal modal-warning fade in"
 											th:id="modal-warning+${estado.id}">

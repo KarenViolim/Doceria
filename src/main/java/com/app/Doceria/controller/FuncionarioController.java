@@ -70,7 +70,7 @@ public class FuncionarioController {
 		funcionario.setSenha(new BCryptPasswordEncoder().encode(funcionario.getSenha()));
 		repositoryFuncionario.save(funcionario);
 		
-		return add(new Funcionario());
+		return listar();
 		
 	}
 }

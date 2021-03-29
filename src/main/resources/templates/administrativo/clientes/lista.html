@@ -36,7 +36,6 @@
 									<th>Data de Nascimento</th>
 									<th>Telefone</th>
 									<th>E-mail</th>
-									<th>Senha</th>
 									<th>Cidade</th>
 									<th>Endereço</th>
 									<th>Número</th>
@@ -51,14 +50,38 @@
 									<td th:text="${cliente.dataNascimento}"></td>
 									<td th:text="${cliente.telefone}"></td>
 									<td th:text="${cliente.email}"></td>
-									<td th:text="${cliente.senha}"></td>
 									<td th:text="${cliente.cidade.nome}"></td>
 									<td th:text="${cliente.endereco}"></td>
 									<td th:text="${cliente.numero}"></td>
 									<td><a class="btn btn-warning btn-xs"
 										th:href="@{/administrativo/clientes/editarCliente/{id}(id=${cliente.id})}">Editar</a>
-										<a class="btn btn-danger btn-xs"
-										th:href="@{/administrativo/clientes/removerCliente/{id}(id=${cliente.id})}">Remover</a>
+										<a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modal-warning"
+										th:attr="data-target='#modal-warning'+${cliente.id }">Remover</a>
+
+										<div class="modal modal-warning fade in"
+											th:id="modal-warning+${cliente.id }">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Fechar">
+															<span aria-hidden="true">×</span>
+														</button>
+														<h5 class="modal-title">Remover Cliente</h5>
+													</div>
+													<div class="modal-body">
+														<h3>Deseja realmente remover o cliente?</h3>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-outline pull-left"
+															data-dismiss="modal">Fechar</button>
+														<a type="button" class="btn btn-outline"
+															th:href="@{/administrativo/clientes/removerCliente/{id}(id=${cliente.id})}"><i
+															class="fa fa-check"></i>&nbsp;Sim</a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</td>
 								</tr>
 							</tbody>

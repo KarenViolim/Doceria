@@ -46,28 +46,6 @@ public class EntradaController {
 		return mv;
 	}
 
-	// @GetMapping("administrativo/entrada/listar")
-	// public ModelAndView listar() {
-	// ModelAndView mv = new ModelAndView("/administrativo/entrada/lista");
-	// mv.addObject("entrada", repositoryEntrada.findAll());
-	// return mv;
-	// }
-	//
-	// @GetMapping("administrativo/entrada/editarEntrada/{id}")
-	// public ModelAndView editar(@PathVariable("id") long id) {
-	// Optional<Entrada> op = repositoryEntrada.findById(id);
-	// Entrada p = op.get();
-	// return add(p);
-	// }
-	//
-	// @GetMapping("administrativo/entrada/removerEntrada/{id}")
-	// public ModelAndView remover(@PathVariable("id") long id) {
-	// Optional<Entrada> op = repositoryEntrada.findById(id);
-	// Entrada p = op.get();
-	// repositoryEntrada.delete(p);
-	// return listar();
-	// }
-
 	@PostMapping("administrativo/entradas/salvarEntrada")
 	public ModelAndView salvar(String acao, Entrada entrada, ItensEntrada itens) {
 		if (acao.equals("itens")) {
